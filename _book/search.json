@@ -1,0 +1,62 @@
+[
+  {
+    "objectID": "mapdata.html",
+    "href": "mapdata.html",
+    "title": "3  map data",
+    "section": "",
+    "text": "This is a map that displays Ontario and trends in Mean Annual Flow over the most recent CLINO.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>map data</span>"
+    ]
+  },
+  {
+    "objectID": "references.html",
+    "href": "references.html",
+    "title": "References",
+    "section": "",
+    "text": "Knuth, Donald E. 1984. “Literate Programming.” Comput.\nJ. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97.",
+    "crumbs": [
+      "References"
+    ]
+  },
+  {
+    "objectID": "summary.html",
+    "href": "summary.html",
+    "title": "2  Summary",
+    "section": "",
+    "text": "In summary, this book has no content whatsoever.\n\n1 + 1\n\n[1] 2",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Summary</span>"
+    ]
+  },
+  {
+    "objectID": "intro.html",
+    "href": "intro.html",
+    "title": "1  Introduction",
+    "section": "",
+    "text": "This is a book created from markdown and executable code.\nSee Knuth (1984) for additional discussion of literate programming.\n\n1 + 1\n\n[1] 2\n\n\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Test",
+    "section": "",
+    "text": "Preface\nThis is a Quarto book.\nHere we can write about the project, and how to use this document…\n\n### We can write and execute code chunks here to render plots or just display data\n1 + 1\n\n[1] 2",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "testdata.html",
+    "href": "testdata.html",
+    "title": "2  testdata",
+    "section": "",
+    "text": "STATION_NUMBER         Date            Parameter             Value        \n Length:85288       Length:85288       Length:85288       Min.   :   0.38  \n Class :character   Class :character   Class :character   1st Qu.:  22.00  \n Mode  :character   Mode  :character   Mode  :character   Median :  66.80  \n                                                          Mean   : 157.65  \n                                                          3rd Qu.: 168.00  \n                                                          Max.   :3240.00  \n                                                          NA's   :483      \n    Symbol         \n Length:85288      \n Class :character  \n Mode  :character  \n                   \n                   \n                   \n                   \n\n\n\nggplot(data = data, aes(x = as.Date(Date), y = Value, colour = STATION_NUMBER)) +\n    geom_line(na.rm = FALSE) +\n    labs(x = \"Streamflow\", y = \"Date\") +\n    ggtitle(\"Raw HYDAT Data All Stations Winisk\")\n\nWarning: Removed 31 rows containing missing values or values outside the scale range\n(`geom_line()`).",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>testdata</span>"
+    ]
+  }
+]
