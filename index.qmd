@@ -1,0 +1,10 @@
+# Preface {.unnumbered}
+
+This is a Quarto book.
+
+Here we can write about the project, and how to use this document...
+
+```{r}
+### We can write and execute code chunks here to render plots or just display data
+1 + 1
+```

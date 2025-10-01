@@ -1,0 +1,28 @@
+project:
+  type: book
+  
+book:
+  title: "Test"
+  author: "Rebecca"
+  date: "2025-09-05"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    #- summary.qmd
+    - testdata.qmd
+    - mapdata.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+
+  html:
+    theme:
+      - cosmo
+      - brand
+  pdf:
+    documentclass: scrreprt
+
+editor: visual
+

@@ -1,0 +1,28 @@
+---
+title: "Plot Example"
+format: html
+---
+
+```{r}
+#| include: false
+echo = FALSE
+library(plotly)
+
+```
+
+```{r}
+#| include: false
+data <- readRDS("./data/hydatdata.rds")
+```
+
+```{r}
+#| echo: false
+summary(data)
+```
+
+```{r}
+ggplot(data = data, aes(x = as.Date(Date), y = Value, colour = STATION_NUMBER)) +
+    geom_line(na.rm = FALSE) +
+    labs(x = "Streamflow", y = "Date") +
+    ggtitle("Raw HYDAT Data All Stations Winisk")
+```

@@ -1,0 +1,139 @@
+---
+title: "Map Example"
+format: html
+---
+
+```{r}
+#| include: false
+echo = FALSE
+library(sf)
+library(leaflet)
+library(leaflet.extras)
+library(tidyverse)
+library(htmlwidgets)
+```
+
+This is a map that displays Ontario and trends in Mean Annual Flow over the most recent CLINO.
+
+```{r}
+#| include: false
+
+ON_shape <- read_sf("Shapefiles/provincial Boundary/on84.shp")
+on84_shape <- read_sf("Shapefiles/provincial Boundary/SOBR_on84.shp")
+dat <- readRDS("CLINO3/MKnP_MeanAnnualD.rds") 
+
+my_icons2 <- iconList(
+  triangle_yellow <- makeIcon(iconUrl = "Icons/icons8-triangle-16 (5).png",
+                            iconWidth = 18, iconHeight = 18),
+  triangle_orange <- makeIcon(iconUrl = "Icons/icons8-triangle-16 (4).png",
+                             iconWidth = 18, iconHeight = 18),
+  triangle_red <- makeIcon(iconUrl = "Icons/icons8-triangle-16 (3).png",
+                           iconWidth = 18, iconHeight = 18),
+  triangle_light <- makeIcon(iconUrl = "Icons/icons8-triangle-16 (2).png",
+                              iconWidth = 18, iconHeight = 18),
+  triangle_blue <- makeIcon(iconUrl = "Icons/icons8-triangle-16.png",
+                              iconWidth = 18, iconHeight = 18),
+  triangle_navy <- makeIcon(iconUrl = "Icons/icons8-triangle-16 (1).png",
+                           iconWidth = 18, iconHeight = 18)
+)
+
+```
+
+
+```{r}
+#| include: false
+      IncH <- dat %>% filter(`Trend Direction` == "Increasing") %>% filter(`Trend Significance` == "Highly Likely")
+      IncV <- dat %>% filter(`Trend Direction` == "Increasing") %>% filter(`Trend Significance` == "Very Likely")
+      IncL <- dat %>% filter(`Trend Direction` == "Increasing") %>% filter(`Trend Significance` == "Likely")
+      DecH <- dat %>% filter(`Trend Direction` == "Decreasing") %>% filter(`Trend Significance` == "Highly Likely")
+      DecV <- dat %>% filter(`Trend Direction` == "Decreasing") %>% filter(`Trend Significance` == "Very Likely")
+      DecL <- dat %>% filter(`Trend Direction` == "Decreasing") %>% filter(`Trend Significance` == "Likely")
+      Unl <- dat %>%  filter(`Trend Significance` == "Unlikely")
+```
+
+```{r}
+#| echo: false
+
+dat$Slope <- round(dat$Slope, digits = 3)
+      
+leaflet(ON_shape, options = leafletOptions(
+        zoomControl = TRUE,
+        minZoom = 3, maxZoom = 11
+      )) %>%
+        addPolygons(data = ON_shape, color = "black", fillOpacity = 0, weight = 2) %>%
+        addPolygons(data = on84_shape, color = "lightgrey", fillOpacity = 0, weight = 1) %>%
+        setView(lng = -85.3, lat = 49, zoom = 4.5) %>%
+        addResetMapButton() %>%
+        addLayersControl(baseGroups = c("Base Map", "Satellite")) %>%
+        #addControl(html = html_legend, position = "bottomleft") %>%
+        addProviderTiles("Esri.WorldStreetMap", group = "Base Map", options = providerTileOptions(attribution = "Esri.WorldStreetMap")) %>%
+        addLegend( 
+          'bottomleft' , 
+          colors=c(
+            "#003876",
+            "#0069DE",
+            "#5EAAFF",
+            "grey",
+            "#FF6363",
+            "#F10A0A",
+            "#8D0404"
+          ), opacity = 1,
+          labels=c('Highly Likely (Increasing)','Very Likely (Increasing)', 'Likely (Increasing)', 'Unlikely', 'Likely (Decreasing)', 'Very Likely (Decreasing)', 'Highly Likely (Decreasing)') 
+        ) %>%
+        #addMarkers(-87.6, 53.6, popup = content, color = "navy", opacity = 0.7, fillOpacity = 0.7) %>%
+        #addMarkers(-86.5, 52.2, popup = content2, color = "darkgreen", opacity = 0.7, fillOpacity = 0.7) %>%
+        addProviderTiles(providers$Esri.WorldImagery, group = "Satellite", options = providerTileOptions(attribution = "Esri.WorldImagery")) %>%
+        addMarkers(
+          lng = IncH$Longitude, lat = IncH$Latitude, popup = paste0("<b>Station: </b>", IncH$Station, "</br>",
+                                                            "<b>Trend Direction: </b>", IncH$`Trend Direction`, "</br>",
+                                                            "<b>Trend Significance: </b>", IncH$`Trend Significance`, "</br>",
+                                                            "<b>Change per year: </b>", IncH$Slope, " ",  "</br>"), 
+          #color = "red", fillOpacity = 1, stroke = F, 
+          icon = triangle_navy
+        ) %>%
+        addMarkers(
+          lng = IncV$Longitude, lat = IncV$Latitude, popup = paste0("<b>Station: </b>", IncV$Station, "</br>",
+                                                                  "<b>Trend Direction: </b>", IncV$`Trend Direction`, "</br>",
+                                                                  "<b>Trend Significance: </b>", IncV$`Trend Significance`, "</br>",
+                                                                  "<b>Change per year: </b>", IncV$Slope, " ",  "</br>"), 
+          #color = "orange", fillOpacity = 1, stroke = F, 
+          icon = triangle_blue
+        ) %>%
+        addMarkers(
+          lng = IncL$Longitude, lat = IncL$Latitude, popup = paste0("<b>Station: </b>", IncL$Station, "</br>",
+                                                                  "<b>Trend Direction: </b>", IncL$`Trend Direction`, "</br>",
+                                                                  "<b>Trend Significance: </b>", IncL$`Trend Significance`, "</br>",
+                                                                  "<b>Change per year: </b>", IncL$Slope, " ",  "</br>"), 
+          #color = "yellow", fillOpacity = 1, stroke = F, 
+          icon = triangle_light
+        ) %>%
+        addMarkers(
+          lng = DecH$Longitude, lat = DecH$Latitude, popup = paste0("<b>Station: </b>", DecH$Station, "</br>",
+                                                                  "<b>Trend Direction: </b>", DecH$`Trend Direction`, "</br>",
+                                                                  "<b>Trend Significance: </b>", DecH$`Trend Significance`, "</br>",
+                                                                  "<b>Change per year: </b>", DecH$Slope, " ",  "</br>"), 
+          #icon = inchigh
+          #color = "darkblue", fillOpacity = 1, stroke = F, clusterOptions = markerClusterOptions()
+          icon = triangle_red
+          ) %>%
+        addMarkers(
+          lng = DecV$Longitude, lat = DecV$Latitude, popup = paste0("<b>Station: </b>", DecV$Station, "</br>",
+                                                                  "<b>Trend Direction: </b>", DecV$`Trend Direction`, "</br>",
+                                                                  "<b>Trend Significance: </b>", DecV$`Trend Significance`, "</br>",
+                                                                  "<b>Change per year: </b>", DecV$Slope, " ",  "</br>"),
+          #color = "blue", fillOpacity = 1, stroke = F, 
+          icon = triangle_orange
+        ) %>%
+        addMarkers(
+          lng = DecL$Longitude, lat = DecL$Latitude, popup = paste0("<b>Station: </b>", DecL$Station, "</br>",
+                                                                   "<b>Trend Direction: </b>", DecL$`Trend Direction`, "</br>",
+                                                                   "<b>Trend Significance: </b>", DecL$`Trend Significance`, "</br>",
+                                                                   "<b>Change per year: </b>", DecL$Slope, " ",  "</br>"),
+          icon = triangle_yellow
+          ) %>%
+        addCircleMarkers(
+          lng = Unl$Longitude, lat = Unl$Latitude, popup = paste0("<b>Station: </b>", Unl$Station, "</br>","<b>Trend Significance: </b>", Unl$`Trend Significance`, "</br>"),
+          radius = 4, color = "grey", fillOpacity = 0.7, stroke = F
+        )
+```
+
