@@ -3833,13 +3833,13 @@
       "checksum": "b76c07a205806424a225f985c30fe183"
     },
     "_book/mapdata.html": {
-      "checksum": "51c143be93c2d9cdaf6cd613d4f7c2b1"
+      "checksum": "64fa6bc47303be3ae8380b266a4ccc6b"
     },
     "_book/references.html": {
       "checksum": "b0d3cac63b0a353f026eb0dc8cfde541"
     },
     "_book/search.json": {
-      "checksum": "973074cf8a55bd2ce1c69bec1400dc5a"
+      "checksum": "3e61b1f0c63330910d8c68efbf4f7a91"
     },
     "_book/site_libs/bootstrap/bootstrap-70a47bd5681a7291082a5b9f83d58762.min.css": {
       "checksum": "70a47bd5681a7291082a5b9f83d58762"
@@ -4124,7 +4124,7 @@
       "checksum": "e514ad799b2b10ced9d02b36ca26bbd2"
     },
     "mapdata.qmd": {
-      "checksum": "93b71bd0f9b0a5af129ecaba4089f7c3"
+      "checksum": "fbb85af286f9245463ded3228dca7875"
     },
     "mdtest.html": {
       "checksum": "dbd0ec11a6e459ca29bc1f78e07cf97c"
